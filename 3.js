@@ -1,5 +1,3 @@
-const util = require('util')
-
 async function solution() {
   const input = await fetch("https://adventofcode.com/2022/day/3/input", {
     "headers": {
@@ -10,15 +8,20 @@ async function solution() {
   });
   const body = await input.text();
 
-  return body.split("\n")
+  const bodyArr = body.split("\n");
+
+  const output = [];
+  for (let index = 0; index < bodyArr.length; index += 3) {
+    output.push(bodyArr.slice(index, index + 3))
+  }
+
+  return output
     .map((items) => {
-      const firstCompartment = items.slice(0, items.length / 2)
-      const secondCompartment = items.slice(items.length / 2)
       const duplicates = []
 
-      for(let i in firstCompartment) {
-        if(secondCompartment.includes(firstCompartment[i])) {
-          duplicates.push(firstCompartment[i])
+      for(let i in items[0]) {
+        if(items[1].includes(items[0][i]) && items[2].includes(items[0][i])) {
+          duplicates.push(items[0][i])
         }
       }
 
@@ -43,6 +46,7 @@ async function solution() {
     .reduce((a,b) => {
       return a + b;
     },0)
+
 }
 
 solution().then((a) => console.log(a));

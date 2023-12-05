@@ -1,7 +1,5 @@
-const fs = require("fs");
 const path = require("path");
-
-const filePath = path.join(__dirname, "./input.txt");
+const { getInput } = require("../../utils");
 
 const getFirstAndLastDigitsPart1 = (line) => {
   const numbers = line
@@ -53,17 +51,11 @@ const getFirstAndLastDigitsPart2 = (line) => {
 
 const solution = (input) => {
   return input
-    .trim()
-    .split("\n\n")
-    .flatMap((line) => line.split("\n"))
     .map((line) => getFirstAndLastDigitsPart2(line))
     .reduce((prev, next) => parseInt(prev) + parseInt(next), 0);
 };
 
-try {
-  const input = fs.readFileSync(filePath, "utf8");
+const filePath = path.join(__dirname, "./input.txt");
+const input = getInput(filePath);
 
-  console.log(solution(input));
-} catch (err) {
-  console.error("Error reading file", err);
-}
+console.log(solution(input));
